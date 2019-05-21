@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+
+  db:
+    build: ./db
+    ports:
+       - 5432:5432
+    environment:
+       - POSTGRES_USER=postgres
+       - POSTGRES_PASSWORD=postgres
+
+  stg1:
+    build: ./producer_stg1
+    depends_on:
+      - db
+    environment:
+      KAFKA_BROKER_URL: broker:9092
+      DATA_TOPIC: streaming.stg1
+      TRANSACTIONS_PER_SECOND: 1000
+  
+  stg2:
+    build: ./pivot_stg2
+    depends_on:
+      - db
+    environment:
+      KAFKA_BROKER_URL: broker:9092
+      DATA_TOPIC: streaming.stg1
+      PIVOT_TOPIC: format.pivot.stg2
+
+networks:
+  default:
+    external:
+      name: kafka-network

@@ -1,0 +1,12 @@
+{
+	"namespace": "example.avro",
+	"type": "record",
+	"name": "",
+	"fields": [
+		{"name": "plant_id", "type": "int"},
+		{"name": "timestamplocal",  "type": "string"},
+                {"name": "tag_type", "type": "string"},
+		{"name": "tag_name", "type": "string"},
+		{"name": "value", "type": ["string", "null"]}
+	]
+}
